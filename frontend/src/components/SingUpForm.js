@@ -136,10 +136,7 @@ export const SignUpForm = ({ setFormState }) => {
           </span>
         </button>
         <div className="flex justify-center">
-          <Link
-            to="/homepage"
-            className="underline hover:text-blue-700 text-base"
-          >
+          <Link to="/" className="underline hover:text-blue-700 text-base">
             Go back to Homepage
           </Link>
         </div>
