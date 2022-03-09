@@ -1,8 +1,9 @@
 const mongoose = require("mongoose");
 var conn = mongoose.Collection;
 var MedicineSchema = new mongoose.Schema({
-    id : {
-        type: Schema.Types.ObjectId, ref: 'User'
+    careTakerID : {
+        type: mongoose.Schema.Types.ObjectId,         
+         ref: 'careTaker'
     },
     medicineName: {
         type: String,
@@ -11,7 +12,10 @@ var MedicineSchema = new mongoose.Schema({
         type:String,
     },
     dose: {
-        type: Number,
+        type: String,
+    },
+    img:{
+        type:String
     }
 },
 { timestamps: true }

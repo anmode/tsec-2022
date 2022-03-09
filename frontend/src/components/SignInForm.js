@@ -1,6 +1,8 @@
 import React from "react";
 import { useFormik } from "formik";
-import { Link } from "react-router-dom";
+import { Link, Navigate } from "react-router-dom";
+import axios from "axios";
+
 
 export const SignInForm = ({ setFormState }) => {
   const Formik = useFormik({
@@ -8,13 +10,15 @@ export const SignInForm = ({ setFormState }) => {
       email: "",
       password: "",
     },
-    onSubmit: (values) => {
+    onSubmit:async (values) => {
       const userData = {
         email: values.email,
         password: values.password,
       };
-
       console.log(userData);
+     var response=await axios.post(process.env.REACT_APP_BASE_URL+"/user/login",userData,{'Content-Type': 'text/plain'})
+      alert(response.data.message)
+      Navigate('/')
     },
   });
 

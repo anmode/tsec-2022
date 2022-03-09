@@ -1,11 +1,10 @@
 const express = require('express')
 const router = express.Router()
-
-const { loginUser, gallery, changePassword } = require('../controller/userController')
 const multer=require('multer');
 var path = require('path');
 var fs = require('fs');
-var pathToCreate = "./images/gallery/";
+const { addMedicine, deleteMedicine } = require('../controller/medicineController')
+var pathToCreate = "./public/images/subCategory/";
 //image upload code
 var Storage = multer.diskStorage({
     destination:async function (req, files, cb) {
@@ -14,7 +13,8 @@ var Storage = multer.diskStorage({
       
     },
     filename: (req, files, cb) => {
-        cb(null,  "images" + path.extname(files.originalname));
+        var catName=req.body.catName.substr(0,10);
+        cb(null, catName.replace(new RegExp(" ", 'g'),"") + "_" + framingDate + path.extname(files.originalname));
     
     },
   });
@@ -34,10 +34,9 @@ var Storage = multer.diskStorage({
         }
     },
     
-  }).single("image");
-router.get('/login', loginUser)
+  }).single("catLogo");
 
-router.post('/gallery',upload, gallery);
-router.post('/changePassword', changePassword)
+router.post('/', addMedicine)
+router.get('/', deleteMedicine)
 
 module.exports = router

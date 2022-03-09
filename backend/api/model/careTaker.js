@@ -1,9 +1,6 @@
 const mongoose = require("mongoose");
 var conn = mongoose.Collection;
 var careTakerSchema = new mongoose.Schema({
-    id: {
-        type: String,
-    },
     name:{
         type:String,
     },
