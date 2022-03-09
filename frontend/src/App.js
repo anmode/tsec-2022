@@ -1,7 +1,18 @@
 import "./App.css";
+import { BrowserRouter, Routes, Route } from "react-router-dom";
+import { Homepage } from "./Pages/Homepage";
+import { SignIn } from "./Pages/SignIn";
 
 function App() {
-  return <div className="text-blue-800">{"hello"}</div>;
+  return (
+    <BrowserRouter>
+      <Routes>
+        <Route path="/" element={<Homepage />} />
+        <Route path="/sign-in" element={<SignIn />} />
+        <Route path="*" element={"Error Page"} />
+      </Routes>
+    </BrowserRouter>
+  );
 }
 
 export default App;
