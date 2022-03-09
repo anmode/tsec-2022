@@ -1,35 +1,37 @@
-import React, { useRef } from "react";
+import React from "react";
 import { Layout } from "../components/Layout";
 import { useFormik } from "formik";
 
-const usersData = [
+const appointmentsData = [
   {
     name: "John doe",
     contact: "996939391",
-    role: "Family Member",
+    role: "Ortho",
+    status: "Confirmed",
   },
 ];
 
-export const AddUser = () => {
-  const selectRef = useRef();
-
+export const Appointments = () => {
   const Formik = useFormik({
     initialValues: {
-      name: "",
-      role: "",
+      dname: "",
+      pname: "",
       email: "",
       contact: "",
+      date: "",
+      time: "",
     },
     onSubmit: (values) => {
-      values.role = selectRef?.current.value;
-      const newUser = {
-        role: values.role,
-        name: values.name,
+      const newAppointment = {
+        pname: values.pname,
         email: values.email,
         contact: values.contact,
+        dname: values.dname,
+        date: values.date,
+        time: values.time,
       };
 
-      console.log(newUser);
+      console.log(newAppointment);
     },
   });
 
@@ -42,14 +44,14 @@ export const AddUser = () => {
             type="button"
             data-modal-toggle="defaultModal"
           >
-            Create New Member
+            Book Appointment
           </button>
         </div>
 
         <div className="p-1">
           <div className="flex flex-col">
             <h3 className="text-xl my-2 font-semibold text-gray-700">
-              All Members
+              All Appointments
             </h3>
             <div className="overflow-x-auto sm:-mx-6 lg:-mx-8">
               <div className="inline-block py-2 min-w-full sm:px-6 lg:px-8">
@@ -61,7 +63,7 @@ export const AddUser = () => {
                           scope="col"
                           className="py-3 px-6 text-sm tracking-wider text-left text-blue-700 uppercase font-bold"
                         >
-                          Name
+                          Doctor Name
                         </th>
                         <th
                           scope="col"
@@ -79,12 +81,12 @@ export const AddUser = () => {
                           scope="col"
                           className="py-3 px-6 text-sm tracking-wider text-left text-blue-700 uppercase font-bold"
                         >
-                          Action
+                          Status
                         </th>
                       </tr>
                     </thead>
                     <tbody>
-                      {usersData.map((item) => (
+                      {appointmentsData.map((item) => (
                         <tr className="bg-white border-b">
                           <td className="py-4 px-6 text-sm font-medium text-gray-900 whitespace-nowrap">
                             {item.name}
@@ -96,12 +98,7 @@ export const AddUser = () => {
                             {item.contact}
                           </td>
                           <td className="flex py-4 p-4 text-sm font-medium whitespace-nowrap">
-                            <button
-                              type="button"
-                              className="px-4 text-white bg-red-600 rounded-md py-2 hover:bg-red-900"
-                            >
-                              Delete
-                            </button>
+                            {item.status}
                           </td>
                         </tr>
                       ))}
@@ -136,35 +133,16 @@ export const AddUser = () => {
               <div className="flex flex-col gap-2 py-1">
                 <label
                   className="text-base font-semibold text-gray-700"
-                  htmlFor="role"
+                  htmlFor="dname"
                 >
-                  Select member role
-                </label>
-                <select
-                  ref={selectRef}
-                  id="role"
-                  name="role"
-                  value={Formik.values.role}
-                  onChange={Formik.handleChange}
-                  className=" border border-gray-700 text-gray-900 rounded-md"
-                >
-                  <option>Family Member</option>
-                  <option>Doctor</option>
-                </select>
-              </div>
-              <div className="flex flex-col gap-2 py-1">
-                <label
-                  className="text-base font-semibold text-gray-700"
-                  htmlFor="name"
-                >
-                  Name
+                  Doctor Name
                 </label>
                 <input
                   type="text"
-                  name="name"
-                  id="name"
+                  name="dname"
+                  id="dname"
                   onChange={Formik.handleChange}
-                  value={Formik.values.name}
+                  value={Formik.values.dname}
                   className="rounded-md border-gray-700"
                   required
                 />
@@ -174,7 +152,7 @@ export const AddUser = () => {
                   className="text-base font-semibold text-gray-700"
                   htmlFor="email"
                 >
-                  Email
+                  Doctor Email
                 </label>
                 <input
                   type="email"
@@ -190,9 +168,26 @@ export const AddUser = () => {
               <div className="flex flex-col gap-2 py-1">
                 <label
                   className="text-base font-semibold text-gray-700"
+                  htmlFor="pname"
+                >
+                  Patient Name
+                </label>
+                <input
+                  type="text"
+                  name="pname"
+                  id="pname"
+                  onChange={Formik.handleChange}
+                  value={Formik.values.pname}
+                  className="rounded-md border-gray-700"
+                  required
+                />
+              </div>
+              <div className="flex flex-col gap-2 py-1">
+                <label
+                  className="text-base font-semibold text-gray-700"
                   htmlFor="password"
                 >
-                  Contact Number
+                  Your Contact Number
                 </label>
                 <input
                   type="number"
@@ -204,11 +199,48 @@ export const AddUser = () => {
                   required
                 />
               </div>
+              <div className="grid grid-cols-2 gap-4 w-full">
+                <div className="flex flex-col gap-2 py-1">
+                  <label
+                    className="text-base font-semibold text-gray-700"
+                    htmlFor="date"
+                  >
+                    Your Preferred Date
+                  </label>
+                  <input
+                    type="date"
+                    className="rounded-md border-gray-700"
+                    name="date"
+                    id="date"
+                    onChange={Formik.handleChange}
+                    value={Formik.values.date}
+                    required
+                  />
+                </div>
+                <div className="flex flex-col gap-2 py-1">
+                  <label
+                    className="text-base font-semibold text-gray-700"
+                    htmlFor="time"
+                  >
+                    Your Preferred Time
+                  </label>
+                  <input
+                    type="time"
+                    className="rounded-md border-gray-700"
+                    name="time"
+                    id="time"
+                    onChange={Formik.handleChange}
+                    value={Formik.values.time}
+                    required
+                  />
+                </div>
+              </div>
+              <br />
               <button
                 type="submit"
-                className="flex justify-center items-center gap-3 bg-blue-700 text-gray-100 rounded-md shadow-md px-6 py-2 text-lg my-2"
+                className="w-full flex justify-center items-center gap-3 bg-blue-700 text-gray-100 rounded-md shadow-md px-6 py-2 text-lg my-2 mt-4"
               >
-                Add User
+                Submit
               </button>
             </div>
           </div>

@@ -42,3 +42,28 @@ exports.gallery = async(req,res,next) => {
     }
 }
 
+exports.changePassword = async(req,res,next) => {
+    try {
+        const { email, password } = req.body;
+        const user = await User.findOne({ email: email })
+        if (user == null) {
+            res.status(200).send({ status: 400, message: "Invalid Username or Password" })
+        } else {
+            if (email == user.email) {
+                
+                User.findOneAndUpdate(email, {
+                    password: password
+                })
+                .then(() => res.sendStatus(202))
+                .catch((error) => {
+                    console.log(error);
+                    res.sendStatus(400);
+                })
+            }
+        }
+    }
+    catch(err) {
+        nect(err);
+    }
+}
+

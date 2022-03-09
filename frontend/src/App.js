@@ -5,6 +5,8 @@ import { SignIn } from "./Pages/SignIn";
 import { Dashboard } from "./Pages/Dashboard";
 import { AddUser } from "./Pages/AddUser";
 import { MedicineDiet } from "./Pages/MedicineDiet";
+import { DoctorsAppointment } from "./Pages/DoctorsAppointment";
+import { Appointments } from "./Pages/Appointments";
 
 function App() {
   return (
@@ -14,7 +16,8 @@ function App() {
         <Route path="/sign-in" element={<SignIn />} />
         <Route path="/dashboard" element={<Dashboard />} />
         <Route path="/users" element={<AddUser />} />
-        {/* <Route path="/users" element={<AddUser />} /> */}
+        <Route path="/appointments" element={<Appointments />} />
+        <Route path="/doctors/appointments" element={<DoctorsAppointment />} />
         <Route path="/medicine-and-diet" element={<MedicineDiet />} />
         <Route path="*" element={"Error Page"} />
       </Routes>
