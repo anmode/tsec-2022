@@ -17,7 +17,7 @@ var userSchema = new mongoose.Schema({
         type: Number
     },
     password: {
-        type: String,
+        type: String
     }
 },
 { timestamps: true }

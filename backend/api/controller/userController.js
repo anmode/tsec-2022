@@ -25,21 +25,4 @@ exports.loginUser = async(req,res,next) => {
     }
 }
 
-exports.gallery = async(req,res,next) => {
-    try{
-        
-        const { patientId, image, message } = req.body;
-        const newGallery = new Gallery({
-            patientId: patientId,
-            image: req.file ? req.file.path : req.body.path,
-            message: message
-        })
-        const images = await newGallery.save();
-        res.status(200).send({ status: 200, data: { images: images }, message: "Saved" });
-        return;
-    }
-    catch(err){
-        next(err);
-    }
-}
 
