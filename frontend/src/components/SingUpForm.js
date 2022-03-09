@@ -1,7 +1,8 @@
 import React from "react";
 import { useFormik } from "formik";
-import { Link } from "react-router-dom";
-
+import { Link, Navigate } from "react-router-dom";
+import axios from "axios";
+var response;
 export const SignUpForm = ({ setFormState }) => {
   const Formik = useFormik({
     initialValues: {
@@ -10,15 +11,16 @@ export const SignUpForm = ({ setFormState }) => {
       password: "",
       contact: "",
     },
-    onSubmit: (values) => {
+    onSubmit: async (values) => {
       const userData = {
         name: values.name,
         email: values.email,
         password: values.password,
         contact: values.contact,
       };
-
       console.log(userData);
+      response=await axios.post(process.env.REACT_APP_BASE_URL+"/user/register",userData,{'Content-Type': 'text/plain'})
+      alert(response.data.message)
     },
   });
 
@@ -137,7 +139,7 @@ export const SignUpForm = ({ setFormState }) => {
         </button>
         <div className="flex justify-center">
           <Link
-            to="/homepage"
+            to="/"
             className="underline hover:text-blue-700 text-base"
           >
             Go back to Homepage

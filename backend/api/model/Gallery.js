@@ -4,7 +4,7 @@ var gallerySchema = new mongoose.Schema({
     patientId : {
         type: mongoose.Schema.Types.ObjectId, ref: 'careTaker'
     },
-    file: {
+    image: {
         type: String,
     },
     message: {

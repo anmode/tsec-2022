@@ -4,11 +4,11 @@ import { Link } from "react-router-dom";
 export const Homepage = () => {
   return (
     <div className="bg-blue-600">
-      <nav className="bg-white border-gray-200 px-4 sm:px-4 py-4 dark:bg-blue-600">
+      <nav className="px-4 sm:px-4 py-4 bg-blue-600">
         <div className="container flex flex-wrap justify-between items-center mx-auto">
           <Link to="/homepage" className="flex items-center">
             <span
-              className="self-center text-xl font-semibold whitespace-nowrap dark:text-white"
+              className="self-center text-xl font-semibold whitespace-nowrap text-white"
               style={{ letterSpacing: "4px" }}
             >
               CARIFY
@@ -17,7 +17,7 @@ export const Homepage = () => {
           <button
             data-collapse-toggle="mobile-menu"
             type="button"
-            className="inline-flex items-center p-2 ml-3 text-sm text-gray-500 rounded-lg md:hidden hover:bg-gray-100 focus:outline-none focus:ring-2 focus:ring-gray-200 dark:text-gray-400 dark:hover:bg-gray-700 dark:focus:ring-gray-600"
+            className="inline-flex items-center p-2 ml-3 text-sm text-gray-500 rounded-lg md:hidden hover:bg-gray-100 focus:outline-none focus:ring-2 focus:ring-gray-200"
             aria-controls="mobile-menu-2"
             aria-expanded="false"
           >
@@ -51,8 +51,8 @@ export const Homepage = () => {
             <ul className="flex flex-col justify-center items-center mt-4 md:flex-row md:space-x-8 md:mt-0 md:text-sm md:font-medium">
               <li>
                 <Link
-                  to={"/homepage"}
-                  className="block py-2 pr-4 pl-3 text-white bg-blue-700 text-lg rounded md:bg-transparent md:p-0 dark:text-white"
+                  to={"/"}
+                  className="block py-2 pr-4 pl-3 text-white bg-blue-700 text-lg rounded md:bg-transparent md:p-0"
                   aria-current="page"
                 >
                   Home
@@ -61,14 +61,14 @@ export const Homepage = () => {
               <li>
                 <Link
                   to="/about"
-                  className="block py-2 pr-4 pl-3 text-lg text-gray-300 border-b border-gray-100 hover:bg-gray-50 md:hover:bg-transparent md:border-0 md:hover:text-blue-700 md:p-0 dark:text-gray-200 md:dark:hover:text-white dark:hover:bg-gray-700 dark:hover:text-white md:dark:hover:bg-transparent dark:border-gray-700"
+                  className="block py-2 pr-4 pl-3 text-lg text-gray-300 hover:text-gray-100 hover:font-medium transition"
                 >
                   About
                 </Link>
               </li>
               <li>
                 <Link to={"/sign-in"}>
-                  <button className="bg-gray-100 text-blue-800 text-lg font-semibold px-6 py-1 rounded-md">
+                  <button className="bg-gray-100 text-blue-800 text-lg font-medium px-8 py-1 rounded-md w-full hover:shadow-lg hover:scale-105 ease-in transform transition-all ">
                     Sign in
                   </button>
                 </Link>
