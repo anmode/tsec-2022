@@ -2,7 +2,7 @@ const mongoose = require("mongoose");
 var conn = mongoose.Collection;
 var userSchema = new mongoose.Schema({
     careTakerId : {
-        type: Schema.Types.ObjectId, ref: 'careTaker'
+        type: mongoose.Schema.Types.ObjectId, ref: 'careTaker'
     },
     role: {
         type: String,
@@ -15,6 +15,9 @@ var userSchema = new mongoose.Schema({
     },
     contact: {
         type: Number
+    },
+    password: {
+        type: String,
     }
 },
 { timestamps: true }

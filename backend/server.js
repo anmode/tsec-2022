@@ -7,8 +7,10 @@ const app = express();
 app.use(express.urlencoded({ extended: false }));
 app.use(express.json());
 
-const userRouterAPI = require('./api/routes/UserApiRouter')
+const careTakerRouterAPI = require('./api/routes/careTakeRouter')
+const userRouterAPI = require('./api/routes/userApiRouter');
 
-app.use('/api/user/', userRouterAPI)
+app.use('/api/careTaker', careTakerRouterAPI)
+app.use('/api/user', userRouterAPI)
 
 app.listen(process.env.PORT, () => console.log('server running on port 3000'))
