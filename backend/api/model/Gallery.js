@@ -2,7 +2,7 @@ const mongoose = require("mongoose");
 var conn = mongoose.Collection;
 var gallerySchema = new mongoose.Schema({
     patientId : {
-        type: String
+        type: mongoose.Schema.Types.ObjectId, ref: 'careTaker'
     },
     image: {
         type: String,
