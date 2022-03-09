@@ -3,9 +3,9 @@ import { Link } from "react-router-dom";
 
 export const SideBar = () => {
   return (
-    <aside className="w-64 h-full shadow-md" aria-label="Sidebar">
-      <div className="h-screen overflow-y-auto py-4 px-3 bg-blue-700">
-        <div className="flex flex-col p-2 my-3">
+    <aside className="w-80 h-auto shadow-md" aria-label="Sidebar">
+      <div className="h-full py-4 px-3 bg-blue-800">
+        <div className="flex flex-col p-2 my-3 mb-5 ">
           <h3
             className="text-white text-3xl font-semibold mb-1"
             style={{ letterSpacing: "4px" }}
@@ -16,7 +16,7 @@ export const SideBar = () => {
             Today is {new Date().toDateString()}
           </span>
         </div>
-        <ul class="space-y-2">
+        <ul class="space-y-4">
           <li>
             <Link
               to="/dashboard"
@@ -55,11 +55,35 @@ export const SideBar = () => {
           </li>
           <li>
             <Link
-              to="#"
+              to="/appointments"
               className="flex items-center p-2 text-base font-normal rounded-lg text-white hover:bg-blue-600"
             >
               <svg
-                className="flex-shrink-0 w-6 h-6 text-gray-500 transition duration-75 dark:text-gray-400 group-hover:text-gray-900"
+                xmlns="http://www.w3.org/2000/svg"
+                className="flex-shrink-0 w-6 h-6 text-gray-400 transition duration-75 group-hover:text-white"
+                fill="currentColor"
+                viewBox="0 0 24 24"
+                stroke="currentColor"
+                strokeWidth={2}
+              >
+                <path
+                  strokeLinecap="round"
+                  strokeLinejoin="round"
+                  d="M9 5H7a2 2 0 00-2 2v12a2 2 0 002 2h10a2 2 0 002-2V7a2 2 0 00-2-2h-2M9 5a2 2 0 002 2h2a2 2 0 002-2M9 5a2 2 0 012-2h2a2 2 0 012 2m-3 7h3m-3 4h3m-6-4h.01M9 16h.01"
+                />
+              </svg>
+              <span class="flex-1 ml-3 whitespace-nowrap">My Appointments</span>
+            </Link>
+          </li>
+          <li>
+            <button
+              id="dropdownButton"
+              data-dropdown-toggle="dropdown"
+              className="w-full flex items-center p-2 text-base font-normal rounded-lg text-white hover:bg-blue-600"
+              type="button"
+            >
+              <svg
+                className="flex-shrink-0 w-6 h-6 text-gray-400 transition duration-75 group-hover:text-gray-900 me-2"
                 fill="currentColor"
                 viewBox="0 0 20 20"
                 xmlns="http://www.w3.org/2000/svg"
@@ -70,8 +94,34 @@ export const SideBar = () => {
                   clip-rule="evenodd"
                 ></path>
               </svg>
-              <span class="flex-1 ml-3 whitespace-nowrap">Doctors</span>
-            </Link>
+              <span class="flex-1 ml-3 text-left whitespace-nowrap">
+                Doctors
+              </span>
+            </button>
+
+            <div
+              id="dropdown"
+              class="hidden z-10 w-44 text-base list-none bg-blue-600 rounded divide-y divide-gray-100 shadow"
+            >
+              <ul className="py-1" aria-labelledby="dropdownButton">
+                <li>
+                  <Link
+                    to="/doctors/appointments"
+                    class="block py-2 px-4 text-sm text-gray-200 "
+                  >
+                    Appointments
+                  </Link>
+                </li>
+                <li>
+                  <Link
+                    to="/doctors/appointments"
+                    class="block py-2 px-4 text-sm text-gray-200"
+                  >
+                    Patient's Diet
+                  </Link>
+                </li>
+              </ul>
+            </div>
           </li>
           <li>
             <Link
