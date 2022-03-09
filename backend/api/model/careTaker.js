@@ -1,6 +1,9 @@
 const mongoose = require("mongoose");
 var conn = mongoose.Collection;
 var careTakerSchema = new mongoose.Schema({
+    id: {
+        type: String,
+    },
     name:{
         type:String,
     },
@@ -8,7 +11,7 @@ var careTakerSchema = new mongoose.Schema({
         type:String,
     },
     contact: {
-        type:String,
+        type:Number,
     },
     password: {
         type:String
