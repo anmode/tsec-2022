@@ -15,12 +15,14 @@ app.use(express.json());
 
 const careTakerRouterAPI = require('./api/routes/careTakeRouter')
 const userRouterAPI = require('./api/routes/UserApiRouter')
+const notifyPatientRouterAPI = require('./api/routes/notifyPatientRouter')
+const bookAppointmentRouterAPI = require('./api/routes/appointmentRouter')
 const dietAPIRouter=require('./api/routes/dietApiRouter');
 const medicineAPIRouter=require('./api/routes/medicineApiRouter');
 
+app.use('/api/user/', notifyPatientRouterAPI)
+app.use('/api/user/', bookAppointmentRouterAPI)
 app.use('/api/careTaker', careTakerRouterAPI)
-
-
 app.use('/api/user/', userRouterAPI);
 app.use('/api/diet',dietAPIRouter);
 app.use('/api/medicine',medicineAPIRouter);
