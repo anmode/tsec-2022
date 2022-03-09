@@ -1,6 +1,6 @@
 import React from "react";
 import { useFormik } from "formik";
-import { Link } from "react-router-dom";
+import { Link, Navigate } from "react-router-dom";
 import axios from "axios";
 var response;
 export const SignUpForm = ({ setFormState }) => {
@@ -139,7 +139,7 @@ export const SignUpForm = ({ setFormState }) => {
         </button>
         <div className="flex justify-center">
           <Link
-            to="/homepage"
+            to="/"
             className="underline hover:text-blue-700 text-base"
           >
             Go back to Homepage
