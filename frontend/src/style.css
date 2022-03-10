@@ -1,0 +1,22 @@
+.link {
+  text-decoration: none;
+}
+.icon-box {
+  background-color: rgb(233, 233, 247);
+  border-radius: 10px;
+  padding: 20px;
+}
+
+.icon-box .icon {
+  padding: 30px;
+  font-size: 100px;
+}
+.icon-box .title {
+  padding-bottom: 10px;
+  color: green;
+}
+
+.icon-box:hover {
+  background-color: #2563eb;
+  color: white;
+}

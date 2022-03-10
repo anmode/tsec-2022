@@ -3,7 +3,7 @@ const router = express.Router()
 
 const { addDiet, getTodayDiet } = require('../controller/dietController')
 
-router.post('/', addDiet)
-router.get('/', getTodayDiet)
+router.post('/add-diet', addDiet)
+router.get('/get-diet', getTodayDiet)
 
 module.exports = router

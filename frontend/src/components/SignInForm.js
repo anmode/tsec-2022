@@ -16,7 +16,7 @@ export const SignInForm = ({ setFormState }) => {
         password: values.password,
       };
       console.log(userData);
-     var response=await axios.post(process.env.REACT_APP_BASE_URL+"/user/login",userData,{'Content-Type': 'text/plain'})
+     var response=await axios.post(process.env.REACT_APP_BASE_URL+"/careTaker/login",userData,{'Content-Type': 'text/plain'})
       alert(response.data.message)
       Navigate('/')
     },

@@ -19,7 +19,8 @@ export const SignUpForm = ({ setFormState }) => {
         contact: values.contact,
       };
       console.log(userData);
-      response=await axios.post(process.env.REACT_APP_BASE_URL+"/user/register",userData,{'Content-Type': 'text/plain'})
+      response=await axios.post(process.env.REACT_APP_BASE_URL+"/careTaker/register",userData,{'Content-Type': 'text/plain'})
+      console.log(response.data);
       alert(response.data.message)
     },
   });

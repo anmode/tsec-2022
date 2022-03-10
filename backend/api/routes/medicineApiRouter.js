@@ -36,7 +36,7 @@ var Storage = multer.diskStorage({
     
   }).single("medicineImg");
 
-router.post('/',upload, addMedicine)
-router.get('/', deleteMedicine)
+router.post('/add-medicine',upload, addMedicine)
+router.get('/delete-medicine', deleteMedicine)
 
 module.exports = router
