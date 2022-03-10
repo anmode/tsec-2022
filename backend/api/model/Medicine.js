@@ -1,14 +1,14 @@
 const mongoose = require("mongoose");
 var conn = mongoose.Collection;
 var MedicineSchema = new mongoose.Schema({
-    careTakerID : {
+    care_taker_ID : {
         type: mongoose.Schema.Types.ObjectId,         
          ref: 'careTaker'
     },
-    medicineName: {
+    medicine_name: {
         type: String,
     },
-    medicineTime: {
+    medicine_time: {
         type:String,
     },
     dose: {

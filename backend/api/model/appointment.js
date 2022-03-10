@@ -4,20 +4,20 @@ var appointmentSchema = new mongoose.Schema({
     careTakerId : {
         type: mongoose.Schema.Types.ObjectId, ref: 'careTaker'
     },
-    name:{
+    patientName:{
         type:String,
     },
-    specialization: {
-        type:String,
+    doctorEmail: {
+        type: String,
     },
-    hospitalName: {
-        type:String,
-    },
-    location: {
+    doctorName: {
         type:String
     },
+    contact: {
+        type: String,
+    },
     date: {
-        type: Date,
+        type: String,
     },
     time: {
         type: String,

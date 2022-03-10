@@ -1,3 +1,4 @@
+import axios from "axios";
 import { useFormik } from "formik";
 import React, { useRef, useState } from "react";
 import { TodayDiet } from "./TodayDiet";
@@ -39,12 +40,24 @@ export const Diet = () => {
         type: values.type,
         title: values.title,
         description: values.description,
-        dateTime: values.dateTime,
+        date: values.dateTime,
       };
 
-      console.log(newDiet);
+      createDietPlan(newDiet);
     },
   });
+
+  const createDietPlan = async (newDiet) => {
+    // setIsLoading(true);
+    const res = await axios.post(
+      process.env.REACT_APP_BASE_URL + "/diet/add-diet",
+      newDiet
+    );
+
+    console.log(res.data);
+    alert(res.data);
+    // setIsLoading(false);
+  };
 
   return (
     <>

@@ -3,7 +3,7 @@ import { Layout } from "../components/Layout";
 import { useFormik } from "formik";
 import axios from "axios";
 import { Loader } from "../components/Loader";
-import { useSession } from "../helpers/useSession";
+// import { useSession } from "../helpers/useSession";
 import { SignIn } from "./SignIn";
 import { useSelector } from "react-redux";
 
@@ -42,6 +42,7 @@ export const AddUser = () => {
     );
 
     console.log(res.data);
+    alert(res.data.message);
     setIsLoading(false);
   };
 
@@ -53,6 +54,7 @@ export const AddUser = () => {
 
     setAllUsers((prev) => prev.filter((user) => user.id !== id));
     console.log(res);
+    alert(res.data.message);
     setIsLoading(false);
   };
 

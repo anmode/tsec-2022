@@ -7,29 +7,23 @@ const {
   addMedicine,
   deleteMedicine,
 } = require("../controller/medicineController");
-var pathToCreate = "./public/images/subCategory/";
+var pathToCreate = "./images/medicine/";
 //image upload code
 var Storage = multer.diskStorage({
-  destination: async function (req, files, cb) {
+  destination: function (req, file, cb) {
     console.log("Files From Disk :  ");
     cb(null, pathToCreate);
   },
-  filename: (req, files, cb) => {
-    var catName = req.body.catName.substr(0, 10);
-    cb(
-      null,
-      catName.replace(new RegExp(" ", "g"), "") +
-        "_" +
-        framingDate +
-        path.extname(files.originalname)
-    );
+  filename: (req, file, cb) => {
+    var medicineName = req.body.medicineName;
+    cb(null, medicineName + path.extname(file.originalname));
   },
 });
 
 var upload = multer({
   storage: Storage,
-  fileFilter: function (req, files, callback) {
-    var ext = path.extname(files.originalname);
+  fileFilter: function (req, file, callback) {
+    var ext = path.extname(file.originalname);
     var extLower = ext.toLowerCase();
     if (extLower == ".jpeg" || extLower == ".png" || extLower == ".jpg") {
       callback(null, true);
@@ -42,7 +36,10 @@ var upload = multer({
       );
     }
   },
-}).single("catLogo");
+}).single("medicineImg");
+
+router.post("/add-medicine", upload, addMedicine);
+router.get("/delete-medicine", deleteMedicine);
 
 router.post("/", addMedicine);
 router.get("/", deleteMedicine);

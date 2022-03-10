@@ -5,7 +5,9 @@ export const TodayDiet = ({ option = 1, deleteItem = "" }) => {
   const [dietData, setDietData] = useState([]);
   useEffect(() => {
     const getData = async () => {
-      const res = await axios.get(process.env.REACT_APP_BASE_URL + "/diet/");
+      const res = await axios.get(
+        process.env.REACT_APP_BASE_URL + "/diet/get-diet"
+      );
 
       console.log(res.data.data);
       if (res.data.data === []) setDietData([]);
@@ -34,8 +36,11 @@ export const TodayDiet = ({ option = 1, deleteItem = "" }) => {
               dietData?.map((item) => (
                 <li className="mb-10 ml-4">
                   <div className="absolute w-3 h-3 bg-gray-700 rounded-full -left-1.5 border border-gray-800"></div>
+                  <p className="mb-1 text-base font-normal leading-none text-gray-700">
+                    {item.type}
+                  </p>
                   <time className="flex justify-between mb-1 text-base font-normal leading-none text-gray-700">
-                    {item.dateTime}
+                    {item.diet_date}
                     {option === 2 && (
                       <button
                         type="button"
@@ -59,11 +64,11 @@ export const TodayDiet = ({ option = 1, deleteItem = "" }) => {
                       </button>
                     )}
                   </time>
-                  <h3 className="text-lg font-semibold text-gray-900">
-                    {item.food}
+                  <h3 className="text-xl font-semibold text-gray-900">
+                    {item.title}
                   </h3>
                   <p className="mb-1 text-base font-normal leading-none text-gray-700">
-                    {item.description}
+                    {item.food_diet}
                   </p>
                 </li>
               ))}
