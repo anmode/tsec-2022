@@ -2,17 +2,16 @@ import React from "react";
 import { Link } from "react-router-dom";
 import signInImage from "../images/landing_bg.jpeg";
 import "../style.css";
-import { MDBCol, MDBContainer, MDBRow, MDBFooter } from "mdbreact";
 
 export const Homepage = () => {
   return (
     <>
       <div className="bg-blue-600">
-        <nav className="px-4 sm:px-4 py-4 bg-blue-600">
+        <nav className="px-4 bg-blue-600">
           <div className="container flex flex-wrap justify-between items-center mx-auto">
             <Link to="/homepage" className="flex items-center link">
               <span
-                className="self-center text-xl font-semibold whitespace-nowrap text-white"
+                className="self-center text-2xl font-semibold whitespace-nowrap text-white"
                 style={{ letterSpacing: "4px" }}
               >
                 CARIFY
@@ -99,7 +98,7 @@ export const Homepage = () => {
                 className="col-lg-12 col-xl-12"
                 style={{ margin: "150px 50px 50px 50px", color: "white" }}
               >
-                <h1>One stop solution to Demansia</h1>
+                <h1>One stop solution to Demantia</h1>
                 <h3>
                   Now take care of your patient
                   <br /> more smartly{" "}
@@ -208,42 +207,126 @@ export const Homepage = () => {
         </div>
       </section>
       <br />
-      <MDBFooter color="blue" className="font-small pt-4 mt-4">
-        <MDBContainer fluid className="text-center text-md-left">
-          <MDBRow>
-            <MDBCol md="6">
-              <h5 className="title">Footer Content</h5>
-              <p>
-                Here you can use rows and columns here to organize your footer
-                content.
-              </p>
-            </MDBCol>
-            <MDBCol md="6">
-              <h5 className="title">Links</h5>
-              <ul>
-                <li className="list-unstyled">
-                  <a href="#!">Link 1</a>
-                </li>
-                <li className="list-unstyled">
-                  <a href="#!">Link 2</a>
-                </li>
-                <li className="list-unstyled">
-                  <a href="#!">Link 3</a>
-                </li>
-                <li className="list-unstyled">
-                  <a href="#!">Link 4</a>
-                </li>
-              </ul>
-            </MDBCol>
-          </MDBRow>
-        </MDBContainer>
-        <div className="footer-copyright text-center py-3">
-          <MDBContainer fluid>
-            &copy; {new Date().getFullYear()} Copyright:{" "}
-            <a href="https://www.mdbootstrap.com"> MDBootstrap.com </a>
-          </MDBContainer>
+
+      <section
+        id="services"
+        class="services section-bg "
+        style={{ backgroundColor: "blue" }}
+      >
+        <div class="container" data-aos="fade-up">
+          <div
+            class="section-title"
+            style={{ color: "white", textAlign: "center" }}
+          >
+            <h2>Our Features</h2>
+            <p>A customer is the most important visitor on our premises!</p>
+          </div>
+
+          <div class="row">
+            <div class="col-md-6 featureSection">
+              <div class="icon-box" data-aos="fade-up" data-aos-delay="100">
+                <i class="icofont-brand-android-robot"></i>
+                <h4>Monitoring patient with doctor dashboard</h4>
+                <p>
+                  Transform your idea into a full-fledged Android Application!
+                </p>
+              </div>
+            </div>
+            <div class="col-md-6 mt-4 mt-md-0 featureSection">
+              <div class="icon-box" data-aos="fade-up" data-aos-delay="300">
+                <i class="icofont-brand-apple"></i>
+                <h4>Solve games to check the brain power</h4>
+                <p>Transform your idea into a full-fledged iOS Application!</p>
+              </div>
+            </div>
+            <div class="col-md-6 mt-4 mt-md-0 featureSection">
+              <div class="icon-box" data-aos="fade-up" data-aos-delay="400">
+                <i class="icofont-android-nexus"></i>
+                <h4>Manage Diet smartly</h4>
+                <p>
+                  Transform your idea into a full-fledged Flutter Application!
+                </p>
+              </div>
+            </div>
+            <div class="col-md-6 mt-4 mt-md-0 featureSection">
+              <div class="icon-box" data-aos="fade-up" data-aos-delay="500">
+                <i class="icofont-web"></i>
+                <h4>Manage Madicine smartly</h4>
+                <p>Transform your idea into a full-fledged Web Application!</p>
+              </div>
+            </div>
+            <div class="col-md-6 mt-4 mt-md-0 featureSection">
+              <div class="icon-box" data-aos="fade-up" data-aos-delay="600">
+                <i class="icofont-micro-chip"></i>
+                <h4>Get random joke to stimulate your mind</h4>
+                <p>Transform your idea into a full-fledged Arduino Project!</p>
+              </div>
+            </div>
+          </div>
+          <br />
         </div>
-      </MDBFooter>
+      </section>
+
+      <div className="footer-dark">
+        <footer>
+          <div className="container">
+            <div className="row">
+              <div className="col-sm-6 col-md-3 item">
+                <h3>Services</h3>
+                <ul>
+                  <li>
+                    <Link to="#">Web design</Link>
+                  </li>
+                  <li>
+                    <Link to="#">Development</Link>
+                  </li>
+                  <li>
+                    <Link to="#">Hosting</Link>
+                  </li>
+                </ul>
+              </div>
+              <div className="col-sm-6 col-md-3 item">
+                <h3>About</h3>
+                <ul>
+                  <li>
+                    <Link to="#">Company</Link>
+                  </li>
+                  <li>
+                    <Link to="#">Team</Link>
+                  </li>
+                  <li>
+                    <Link to="#">Careers</Link>
+                  </li>
+                </ul>
+              </div>
+              <div className="col-md-6 item text">
+                <h3>Company Name</h3>
+                <p>
+                  Praesent sed lobortis mi. Suspendisse vel placerat ligula.
+                  Vivamus ac sem lacus. Ut vehicula rhoncus elementum. Etiam
+                  quis tristique lectus. Aliquam in arcu eget velit pulvinar
+                  dictum vel in justo.
+                </p>
+              </div>
+              <div className="col item social">
+                <Link to="#">
+                  <i className="fa fa-facebook"></i>
+                </Link>
+                <Link to="#">
+                  <i className="fa fa-twitter"></i>
+                </Link>
+                <Link to="#">
+                  <i className="fa fa-snapchat"></i>
+                </Link>
+                <Link to="#">
+                  <i className="fa fa-instagram"></i>
+                </Link>
+              </div>
+            </div>
+            <p className="copyright">Company Name © 2018</p>
+          </div>
+        </footer>
+      </div>
     </>
   );
 };
