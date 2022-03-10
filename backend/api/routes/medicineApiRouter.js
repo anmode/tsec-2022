@@ -41,6 +41,7 @@ const {
 
 router.post("/add-medicine", addMedicine);
 router.get("/delete-medicine", deleteMedicine);
+router.post("/get-medicine", fetchMedicine);
 
 router.post("/", addMedicine);
 router.get("/", deleteMedicine);

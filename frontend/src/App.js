@@ -7,12 +7,12 @@ import { AddUser } from "./Pages/AddUser";
 import { MedicineDiet } from "./Pages/MedicineDiet";
 import { DoctorsAppointment } from "./Pages/DoctorsAppointment";
 import { Appointments } from "./Pages/Appointments";
-import { useSelector } from "react-redux";
 import { useSession } from "./helpers/useSession";
+import { UpdatePassword } from "./Pages/UpdatePassword";
+import { ErrorPage } from "./Pages/ErrorPage";
 
 function App() {
   useSession();
-  const { isLoggedIn } = useSelector((state) => state?.users);
   return (
     <BrowserRouter>
       <Routes>
@@ -26,8 +26,9 @@ function App() {
         <Route path="/doctors/appointments" element={<DoctorsAppointment />} />
 
         <Route path="/medicine-and-diet" element={<MedicineDiet />} />
+        <Route path="/user/update-password" element={<UpdatePassword />} />
 
-        <Route path="*" element={"Error Page"} />
+        <Route path="*" element={<ErrorPage />} />
       </Routes>
     </BrowserRouter>
   );

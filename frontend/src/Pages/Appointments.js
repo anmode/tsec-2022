@@ -1,9 +1,10 @@
-import React, { useState } from "react";
+import React, { useEffect, useState } from "react";
 import { Layout } from "../components/Layout";
 import { useFormik } from "formik";
 import { useSelector } from "react-redux";
 import { useSession } from "../helpers/useSession";
 import { SignIn } from "./SignIn";
+import axios from "axios";
 
 const appointmentsData = [
   {
@@ -17,6 +18,7 @@ const appointmentsData = [
 export const Appointments = () => {
   useSession();
   const [isModalOpen, setModal] = useState(false);
+  const [appointmentData, setAppointments] = useState([]);
   const { isLoggedIn } = useSelector((state) => state?.users);
   const Formik = useFormik({
     initialValues: {
@@ -29,6 +31,7 @@ export const Appointments = () => {
     },
     onSubmit: (values) => {
       const newAppointment = {
+        id: window.sessionStorage.getItem("loggedId"),
         pname: values.pname,
         email: values.email,
         contact: values.contact,
@@ -38,8 +41,36 @@ export const Appointments = () => {
       };
 
       console.log(newAppointment);
+      bookAppointment(newAppointment);
     },
   });
+
+  const bookAppointment = async (newAppointment) => {
+    const res = await axios.post(
+      process.env.REACT_APP_BASE_URL + "/user/bookAppointment",
+      newAppointment
+    );
+
+    console.log(res.data.message);
+    alert(res.data.message);
+  };
+
+  useEffect(() => {
+    const getData = async () => {
+      console.log("in");
+      // setIsLoading(true);
+      const res = await axios.post(
+        process.env.REACT_APP_BASE_URL + "/user/fetchAppointment",
+        { email: window.sessionStorage.getItem("loggedEmail") }
+      );
+
+      console.log(res.data.message);
+      setAppointments(res.data.message);
+      // setIsLoading(false);
+    };
+
+    getData();
+  }, []);
 
   return (
     <>
@@ -87,7 +118,13 @@ export const Appointments = () => {
                               scope="col"
                               className="py-3 px-6 text-sm tracking-wider text-left text-blue-700 uppercase font-bold"
                             >
-                              Contact
+                              Address
+                            </th>
+                            <th
+                              scope="col"
+                              className="py-3 px-6 text-sm tracking-wider text-left text-blue-700 uppercase font-bold"
+                            >
+                              Date & Time
                             </th>
                             <th
                               scope="col"
@@ -98,22 +135,29 @@ export const Appointments = () => {
                           </tr>
                         </thead>
                         <tbody>
-                          {appointmentsData.map((item) => (
-                            <tr className="bg-white border-b">
-                              <td className="py-4 px-6 text-sm font-medium text-gray-900 whitespace-nowrap">
-                                {item.name}
-                              </td>
-                              <td className="py-4 px-6 text-sm text-gray-500 whitespace-nowrap">
-                                {item.role}
-                              </td>
-                              <td className="py-4 px-6 text-sm text-gray-500 whitespace-nowrap">
-                                {item.contact}
-                              </td>
-                              <td className="flex py-4 p-4 text-sm font-medium whitespace-nowrap">
-                                {item.status}
-                              </td>
-                            </tr>
-                          ))}
+                          {appointmentData.length > 0 &&
+                            appointmentData.map((item) => (
+                              <tr className="bg-white border-b">
+                                <td className="py-4 px-6 text-sm font-medium text-gray-900 whitespace-nowrap">
+                                  {item.name}
+                                </td>
+                                <td className="py-4 px-6 text-sm text-gray-500 whitespace-nowrap">
+                                  {item.specialization}
+                                </td>
+                                <td className="py-4 px-6 text-sm text-gray-500 whitespace-nowrap">
+                                  {item.hospitalName}
+                                  <br />
+                                  {item.location}
+                                </td>
+                                <td className="py-4 px-6 text-sm text-gray-500 whitespace-nowrap">
+                                  {new Date(item.date).toDateString()}{" "}
+                                  {item.time}
+                                </td>
+                                <td className="flex py-4 p-4 text-sm font-bold text-red-600 whitespace-nowrap align-text-bottom">
+                                  {item.status === 0 ? "Confirmed" : "Pending"}
+                                </td>
+                              </tr>
+                            ))}
                         </tbody>
                       </table>
                     </div>

@@ -52,11 +52,11 @@ export const Dashboard = () => {
             </span>
           </div>
           <div className="grid grid-cols-2 w-full gap-7 mb-2 h-96">
-            <div className="bg-white p-8 shadow-md rounded-md h-auto flex flex-col items-center">
-              <JokesBlock />
-            </div>
             <div className="bg-white p-8 shadow-md rounded-md overflow-y-scroll">
               <TodayDiet />
+            </div>
+            <div className="bg-white p-8 shadow-md rounded-md h-auto flex flex-col items-center">
+              <JokesBlock />
             </div>
           </div>
 

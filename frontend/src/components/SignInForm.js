@@ -37,6 +37,7 @@ export const SignInForm = ({ setFormState }) => {
         dispatch(UsersActions.toggleLogIn(true));
         // session starts
         window.sessionStorage.setItem("isLoggedIn", true);
+        window.sessionStorage.setItem("loggedEmail", userData.email);
         window.sessionStorage.setItem("loggedRole", userData.role);
         window.sessionStorage.setItem("loggedName", userData.name);
         window.sessionStorage.setItem("loggedId", userData.id);
@@ -114,7 +115,7 @@ export const SignInForm = ({ setFormState }) => {
           </svg>
           Sign In
         </button>
-        <button type="button" className="my-2">
+        <button type="button" className="my-2 mb-1">
           Don't have an account?
           <span
             className="text-blue-700 px-2 font-medium hover:underline"
@@ -123,6 +124,15 @@ export const SignInForm = ({ setFormState }) => {
             Sign Up
           </span>
         </button>
+        <Link to="/user/update-password" className="my-1 text-center">
+          Already a member?
+          <span
+            className="text-blue-700 px-2 font-medium hover:underline"
+            onClick={() => setFormState((prev) => !prev)}
+          >
+            Enter password
+          </span>
+        </Link>
         <div className="flex justify-center">
           <Link to="/" className="underline hover:text-blue-700 text-base">
             Go back to Homepage

@@ -40,6 +40,7 @@ export const Medicine = () => {
     onSubmit: (values) => {
       values.type = selectRef.current?.value;
       const newMedicine = {
+        id: window.sessionStorage.getItem("loggedId"),
         type: values.type,
         title: values.title,
         description: values.description,
@@ -60,6 +61,7 @@ export const Medicine = () => {
     );
 
     console.log(res.data);
+    alert(res.data);
     // setIsLoading(false);
   };
 

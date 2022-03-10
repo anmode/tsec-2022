@@ -1,21 +1,27 @@
 import axios from "axios";
 import React, { useEffect, useState } from "react";
+import { useSelector } from "react-redux";
 
 export const TodayMedicine = ({ option = 1, deleteItem = "" }) => {
   const [medicineData, setMedicineData] = useState([]);
+  const {
+    userData: { id },
+  } = useSelector((state) => state?.users);
+
   useEffect(() => {
     const getData = async () => {
-      const res = await axios.get(
-        process.env.REACT_APP_BASE_URL + "/fetchMedicine"
+      const res = await axios.post(
+        process.env.REACT_APP_BASE_URL + "/medicine/get-medicine",
+        { carTakerId: id }
       );
 
-      console.log(res.data.data);
+      console.log(res.data.message);
       if (res.data.data === []) setMedicineData([]);
-      else setMedicineData(res.data.data);
+      else setMedicineData(res.data.message);
     };
 
     getData();
-  }, []);
+  }, [id]);
 
   console.log(medicineData.length);
 
@@ -36,11 +42,11 @@ export const TodayMedicine = ({ option = 1, deleteItem = "" }) => {
               <li className="mb-6 ml-4">
                 <div className="absolute w-3 h-3 bg-gray-700 rounded-full -left-1.5 border border-gray-800"></div>
                 <time className="flex justify-between mb-1 text-base font-normal leading-none text-gray-700">
-                  {item.dateTime}
+                  {item.medicine_time}
                   <button
                     type="button"
                     className="absolute z-20 right-0"
-                    onClick={() => deleteItem(item.id)}
+                    onClick={() => deleteItem(item._id)}
                   >
                     <svg
                       xmlns="http://www.w3.org/2000/svg"
@@ -59,10 +65,10 @@ export const TodayMedicine = ({ option = 1, deleteItem = "" }) => {
                   </button>
                 </time>
                 <h3 className="text-lg font-semibold text-gray-900">
-                  {item.title}
+                  {item.medicine_name}
                 </h3>
-                <p className="my-1 text-base leading-none text-red-700 font-medium">
-                  {item.type}
+                <p className="flex gap-2 my-1 text-base leading-none text-red-700 font-medium">
+                  {item.type} ({item.dose} dose)
                 </p>
                 <p className="my-1 text-base font-normal leading-none text-gray-700">
                   {item.description}
