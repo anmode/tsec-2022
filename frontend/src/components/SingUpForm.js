@@ -18,9 +18,13 @@ export const SignUpForm = ({ setFormState }) => {
         password: values.password,
         contact: values.contact,
       };
-      console.log(userData);
-      response=await axios.post(process.env.REACT_APP_BASE_URL+"/user/register",userData,{'Content-Type': 'text/plain'})
-      alert(response.data.message)
+      response = await axios.post(
+        process.env.REACT_APP_BASE_URL + "/careTaker/register",
+        userData,
+        { "Content-Type": "text/plain" }
+      );
+      console.log(response.data);
+      alert(response.data.message);
     },
   });
 
@@ -138,10 +142,7 @@ export const SignUpForm = ({ setFormState }) => {
           </span>
         </button>
         <div className="flex justify-center">
-          <Link
-            to="/"
-            className="underline hover:text-blue-700 text-base"
-          >
+          <Link to="/" className="underline hover:text-blue-700 text-base">
             Go back to Homepage
           </Link>
         </div>

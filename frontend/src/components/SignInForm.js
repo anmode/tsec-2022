@@ -1,24 +1,47 @@
 import React from "react";
 import { useFormik } from "formik";
-import { Link, Navigate } from "react-router-dom";
+import { Link, useNavigate } from "react-router-dom";
 import axios from "axios";
-
+import { useDispatch } from "react-redux";
+import { UsersActions } from "../redux/UsersSlice";
 
 export const SignInForm = ({ setFormState }) => {
+  const dispatch = useDispatch();
+  const navigate = useNavigate();
   const Formik = useFormik({
     initialValues: {
       email: "",
       password: "",
     },
-    onSubmit:async (values) => {
+    onSubmit: async (values) => {
       const userData = {
         email: values.email,
         password: values.password,
       };
-      console.log(userData);
-     var response=await axios.post(process.env.REACT_APP_BASE_URL+"/user/login",userData,{'Content-Type': 'text/plain'})
-      alert(response.data.message)
-      Navigate('/')
+
+      const response = await axios.post(
+        process.env.REACT_APP_BASE_URL + "/careTaker/login",
+        userData
+      );
+
+      alert(response.data.message);
+
+      if (response.status) {
+        const userData = {
+          id: response.data.data.user["_id"],
+          email: response.data.data.user.email,
+          name: response.data.data.user.name,
+          role: response.data.data.user.role ?? "caretaker",
+        };
+        dispatch(UsersActions.addUser(userData));
+        dispatch(UsersActions.toggleLogIn(true));
+        // session starts
+        window.sessionStorage.setItem("isLoggedIn", true);
+        window.sessionStorage.setItem("loggedRole", userData.role);
+        window.sessionStorage.setItem("loggedName", userData.name);
+        window.sessionStorage.setItem("loggedId", userData.id);
+        setTimeout(() => navigate("/dashboard"), 1500);
+      }
     },
   });
 
@@ -61,7 +84,7 @@ export const SignInForm = ({ setFormState }) => {
             Password
           </label>
           <input
-            type="text"
+            type="password"
             className="rounded-md border-gray-700"
             name="password"
             id="password"

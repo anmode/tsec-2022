@@ -1,7 +1,11 @@
 import React from "react";
 import { Link } from "react-router-dom";
+import { useSelector, useDispatch } from "react-redux";
+import { UsersActions } from "../redux/UsersSlice";
 
 export const SideBar = () => {
+  const dispatch = useDispatch();
+  const { role } = useSelector((state) => state?.users?.userData);
   return (
     <aside className="w-80 h-auto shadow-md" aria-label="Sidebar">
       <div className="h-full py-4 px-3 bg-blue-800">
@@ -17,112 +21,125 @@ export const SideBar = () => {
           </span>
         </div>
         <ul class="space-y-4">
-          <li>
-            <Link
-              to="/dashboard"
-              className="flex items-center p-2 text-base font-normal  rounded-lg text-white hover:bg-blue-600"
-            >
-              <svg
-                class="flex-shrink-0 w-6 h-6 text-gray-500 transition duration-75 dark:text-gray-400 group-hover:text-gray-900 dark:group-hover:text-white"
-                fill="currentColor"
-                viewBox="0 0 20 20"
-                xmlns="http://www.w3.org/2000/svg"
+          {role === "caretaker" && (
+            <li>
+              <Link
+                to="/dashboard"
+                className="flex items-center p-2 text-base font-normal  rounded-lg text-white hover:bg-blue-600"
               >
-                <path d="M5 3a2 2 0 00-2 2v2a2 2 0 002 2h2a2 2 0 002-2V5a2 2 0 00-2-2H5zM5 11a2 2 0 00-2 2v2a2 2 0 002 2h2a2 2 0 002-2v-2a2 2 0 00-2-2H5zM11 5a2 2 0 012-2h2a2 2 0 012 2v2a2 2 0 01-2 2h-2a2 2 0 01-2-2V5zM11 13a2 2 0 012-2h2a2 2 0 012 2v2a2 2 0 01-2 2h-2a2 2 0 01-2-2v-2z"></path>
-              </svg>
-              <span class="ml-3">Dashboard</span>
-            </Link>
-          </li>
-          <li>
-            <Link
-              to="/users"
-              className="flex items-center p-2 text-base font-normal rounded-lg text-white hover:bg-blue-600"
-            >
-              <svg
-                class="flex-shrink-0 w-6 h-6 text-gray-500 transition duration-75 dark:text-gray-400 group-hover:text-gray-900 dark:group-hover:text-white"
-                fill="currentColor"
-                viewBox="0 0 20 20"
-                xmlns="http://www.w3.org/2000/svg"
+                <svg
+                  class="flex-shrink-0 w-6 h-6 text-gray-400 transition duration-75 group-hover:text-white"
+                  fill="currentColor"
+                  viewBox="0 0 20 20"
+                  xmlns="http://www.w3.org/2000/svg"
+                >
+                  <path d="M5 3a2 2 0 00-2 2v2a2 2 0 002 2h2a2 2 0 002-2V5a2 2 0 00-2-2H5zM5 11a2 2 0 00-2 2v2a2 2 0 002 2h2a2 2 0 002-2v-2a2 2 0 00-2-2H5zM11 5a2 2 0 012-2h2a2 2 0 012 2v2a2 2 0 01-2 2h-2a2 2 0 01-2-2V5zM11 13a2 2 0 012-2h2a2 2 0 012 2v2a2 2 0 01-2 2h-2a2 2 0 01-2-2v-2z"></path>
+                </svg>
+                <span class="ml-3">Dashboard</span>
+              </Link>
+            </li>
+          )}
+          {role === "caretaker" && (
+            <li>
+              <Link
+                to="/users"
+                className="flex items-center p-2 text-base font-normal rounded-lg text-white hover:bg-blue-600"
               >
-                <path
-                  fill-rule="evenodd"
-                  d="M10 9a3 3 0 100-6 3 3 0 000 6zm-7 9a7 7 0 1114 0H3z"
-                  clip-rule="evenodd"
-                ></path>
-              </svg>
-              <span class="flex-1 ml-3 whitespace-nowrap">Add Users</span>
-            </Link>
-          </li>
-          <li>
-            <Link
-              to="/appointments"
-              className="flex items-center p-2 text-base font-normal rounded-lg text-white hover:bg-blue-600"
-            >
-              <svg
-                xmlns="http://www.w3.org/2000/svg"
-                className="flex-shrink-0 w-6 h-6 text-gray-400 transition duration-75 group-hover:text-white"
-                fill="currentColor"
-                viewBox="0 0 24 24"
-                stroke="currentColor"
-                strokeWidth={2}
+                <svg
+                  class="flex-shrink-0 w-6 h-6 text-gray-400 transition duration-75 group-hover:text-white"
+                  fill="currentColor"
+                  viewBox="0 0 20 20"
+                  xmlns="http://www.w3.org/2000/svg"
+                >
+                  <path
+                    fill-rule="evenodd"
+                    d="M10 9a3 3 0 100-6 3 3 0 000 6zm-7 9a7 7 0 1114 0H3z"
+                    clip-rule="evenodd"
+                  ></path>
+                </svg>
+                <span class="flex-1 ml-3 whitespace-nowrap">Add Users</span>
+              </Link>
+            </li>
+          )}
+          {role === "caretaker" && (
+            <li>
+              <Link
+                to="/appointments"
+                className="flex items-center p-2 text-base font-normal rounded-lg text-white hover:bg-blue-600"
               >
-                <path
-                  strokeLinecap="round"
-                  strokeLinejoin="round"
-                  d="M9 5H7a2 2 0 00-2 2v12a2 2 0 002 2h10a2 2 0 002-2V7a2 2 0 00-2-2h-2M9 5a2 2 0 002 2h2a2 2 0 002-2M9 5a2 2 0 012-2h2a2 2 0 012 2m-3 7h3m-3 4h3m-6-4h.01M9 16h.01"
-                />
-              </svg>
-              <span class="flex-1 ml-3 whitespace-nowrap">My Appointments</span>
-            </Link>
-          </li>
-          <li>
-            <button
-              id="dropdownButton"
-              data-dropdown-toggle="dropdown"
-              className="w-full flex items-center p-2 text-base font-normal rounded-lg text-white hover:bg-blue-600"
-              type="button"
-            >
-              <svg
-                className="flex-shrink-0 w-6 h-6 text-gray-400 transition duration-75 group-hover:text-gray-900 me-2"
-                fill="currentColor"
-                viewBox="0 0 20 20"
-                xmlns="http://www.w3.org/2000/svg"
-              >
-                <path
-                  fill-rule="evenodd"
-                  d="M10 2a4 4 0 00-4 4v1H5a1 1 0 00-.994.89l-1 9A1 1 0 004 18h12a1 1 0 00.994-1.11l-1-9A1 1 0 0015 7h-1V6a4 4 0 00-4-4zm2 5V6a2 2 0 10-4 0v1h4zm-6 3a1 1 0 112 0 1 1 0 01-2 0zm7-1a1 1 0 100 2 1 1 0 000-2z"
-                  clip-rule="evenodd"
-                ></path>
-              </svg>
-              <span class="flex-1 ml-3 text-left whitespace-nowrap">
-                Doctors
-              </span>
-            </button>
+                <svg
+                  xmlns="http://www.w3.org/2000/svg"
+                  className="flex-shrink-0 w-6 h-6 text-gray-400 transition duration-75 group-hover:text-white"
+                  fill="currentColor"
+                  viewBox="0 0 24 24"
+                  stroke="currentColor"
+                  strokeWidth={2}
+                >
+                  <path
+                    strokeLinecap="round"
+                    strokeLinejoin="round"
+                    d="M9 5H7a2 2 0 00-2 2v12a2 2 0 002 2h10a2 2 0 002-2V7a2 2 0 00-2-2h-2M9 5a2 2 0 002 2h2a2 2 0 002-2M9 5a2 2 0 012-2h2a2 2 0 012 2m-3 7h3m-3 4h3m-6-4h.01M9 16h.01"
+                  />
+                </svg>
+                <span class="flex-1 ml-3 whitespace-nowrap">
+                  My Appointments
+                </span>
+              </Link>
+            </li>
+          )}
+          {role === "doctor" && (
+            <>
+              <li>
+                <button
+                  id="dropdownButton"
+                  data-dropdown-toggle="dropdown"
+                  className="w-full flex items-center p-2 text-base font-normal rounded-lg text-white hover:bg-blue-600"
+                  type="button"
+                >
+                  <svg
+                    className="flex-shrink-0 w-6 h-6 text-gray-400 transition duration-75 group-hover:text-gray-900 me-2"
+                    fill="currentColor"
+                    viewBox="0 0 20 20"
+                    xmlns="http://www.w3.org/2000/svg"
+                  >
+                    <path
+                      fill-rule="evenodd"
+                      d="M10 2a4 4 0 00-4 4v1H5a1 1 0 00-.994.89l-1 9A1 1 0 004 18h12a1 1 0 00.994-1.11l-1-9A1 1 0 0015 7h-1V6a4 4 0 00-4-4zm2 5V6a2 2 0 10-4 0v1h4zm-6 3a1 1 0 112 0 1 1 0 01-2 0zm7-1a1 1 0 100 2 1 1 0 000-2z"
+                      clip-rule="evenodd"
+                    ></path>
+                  </svg>
+                  <span class="flex-1 ml-3 text-left whitespace-nowrap">
+                    Doctors
+                  </span>
+                </button>
 
-            <div
-              id="dropdown"
-              class="hidden z-10 w-44 text-base list-none bg-blue-600 rounded divide-y divide-gray-100 shadow"
-            >
-              <ul className="py-1" aria-labelledby="dropdownButton">
-                <li>
-                  <Link
-                    to="/doctors/appointments"
-                    class="block py-2 px-4 text-sm text-gray-200 "
-                  >
-                    Appointments
-                  </Link>
-                </li>
-                <li>
-                  <Link
-                    to="/doctors/appointments"
-                    class="block py-2 px-4 text-sm text-gray-200"
-                  >
-                    Patient's Diet
-                  </Link>
-                </li>
-              </ul>
-            </div>
-          </li>
+                <div
+                  id="dropdown"
+                  class="hidden z-10 w-44 text-base list-none bg-blue-600 rounded divide-y divide-gray-100 shadow"
+                >
+                  <ul className="py-1" aria-labelledby="dropdownButton">
+                    <li>
+                      <Link
+                        to="/doctors/appointments"
+                        class="block py-2 px-4 text-sm text-gray-200 "
+                      >
+                        Appointments
+                      </Link>
+                    </li>
+                    <li>
+                      <Link
+                        to="/doctors/appointments"
+                        class="block py-2 px-4 text-sm text-gray-200"
+                      >
+                        Patient's Diet
+                      </Link>
+                    </li>
+                  </ul>
+                </div>
+              </li>
+            </>
+          )}
+
           <li>
             <Link
               to="/medicine-and-diet"
@@ -131,7 +148,7 @@ export const SideBar = () => {
               <svg
                 xmlns="http:/
                  /www.w3.org/2000/svg"
-                className="flex-shrink-0 w-6 h-6 text-gray-500 transition duration-75 dark:text-gray-400 group-hover:text-gray-900"
+                className="flex-shrink-0 w-6 h-6 text-gray-400 transition duration-75 group-hover:text-gray-900"
                 fill="none"
                 viewBox="0 0 24 24"
                 stroke="currentColor"
@@ -151,10 +168,11 @@ export const SideBar = () => {
           <li>
             <Link
               to="/"
+              onClick={() => dispatch(UsersActions.logout())}
               className="flex items-center p-2 text-base font-normal rounded-lg text-white hover:bg-blue-600"
             >
               <svg
-                class="flex-shrink-0 w-6 h-6 text-gray-500 transition duration-75 dark:text-gray-400 group-hover:text-gray-900 dark:group-hover:text-white"
+                class="flex-shrink-0 w-6 h-6 text-gray-400 transition duration-75 group-hover:text-white"
                 fill="currentColor"
                 viewBox="0 0 20 20"
                 xmlns="http://www.w3.org/2000/svg"
