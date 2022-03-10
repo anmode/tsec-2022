@@ -3,7 +3,7 @@ const router = express.Router()
 const multer=require('multer');
 var path = require('path');
 var fs = require('fs');
-const { addMedicine, deleteMedicine } = require('../controller/medicineController')
+const { addMedicine, deleteMedicine, fetchMedicine } = require('../controller/medicineController')
 var pathToCreate = "./images/medicine/";
 //image upload code
 var Storage = multer.diskStorage({
@@ -37,6 +37,7 @@ var Storage = multer.diskStorage({
   }).single("medicineImg");
 
 router.post('/add-medicine',upload, addMedicine)
-router.get('/delete-medicine', deleteMedicine)
+router.post('/delete-medicine', deleteMedicine)
+router.post('/fetchMedicine', fetchMedicine)
 
 module.exports = router
