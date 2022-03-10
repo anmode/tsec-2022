@@ -55,7 +55,7 @@ export const Medicine = () => {
   const createMedicinePlan = async (newMedicine) => {
     // setIsLoading(true);
     const res = await axios.post(
-      process.env.REACT_APP_BASE_URL + "/medicine/",
+      process.env.REACT_APP_BASE_URL + "/medicine/add-medicine",
       newMedicine
     );
 

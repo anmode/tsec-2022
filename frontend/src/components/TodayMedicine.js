@@ -5,7 +5,9 @@ export const TodayMedicine = ({ option = 1, deleteItem = "" }) => {
   const [medicineData, setMedicineData] = useState([]);
   useEffect(() => {
     const getData = async () => {
-      const res = await axios.get(process.env.REACT_APP_BASE_URL + "/medicine");
+      const res = await axios.get(
+        process.env.REACT_APP_BASE_URL + "/fetchMedicine"
+      );
 
       console.log(res.data.data);
       if (res.data.data === []) setMedicineData([]);
