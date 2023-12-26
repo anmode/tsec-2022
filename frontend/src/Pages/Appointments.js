@@ -108,7 +108,7 @@ export const Appointments = () => {
                             >
                               Doctor Name
                             </th>
-                            <th
+                            {/* <th
                               scope="col"
                               className="py-3 px-6 text-sm tracking-wider text-left text-blue-700 uppercase font-bold"
                             >
@@ -119,7 +119,7 @@ export const Appointments = () => {
                               className="py-3 px-6 text-sm tracking-wider text-left text-blue-700 uppercase font-bold"
                             >
                               Address
-                            </th>
+                            </th> */}
                             <th
                               scope="col"
                               className="py-3 px-6 text-sm tracking-wider text-left text-blue-700 uppercase font-bold"
@@ -139,16 +139,16 @@ export const Appointments = () => {
                             appointmentData.map((item) => (
                               <tr className="bg-white border-b">
                                 <td className="py-4 px-6 text-sm font-medium text-gray-900 whitespace-nowrap">
-                                  {item.name}
+                                  {item.doctorName}
                                 </td>
-                                <td className="py-4 px-6 text-sm text-gray-500 whitespace-nowrap">
+                                {/* <td className="py-4 px-6 text-sm text-gray-500 whitespace-nowrap">
                                   {item.specialization}
                                 </td>
                                 <td className="py-4 px-6 text-sm text-gray-500 whitespace-nowrap">
                                   {item.hospitalName}
                                   <br />
                                   {item.location}
-                                </td>
+                                </td> */}
                                 <td className="py-4 px-6 text-sm text-gray-500 whitespace-nowrap">
                                   {new Date(item.date).toDateString()}{" "}
                                   {item.time}
