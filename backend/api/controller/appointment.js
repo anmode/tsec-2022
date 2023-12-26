@@ -72,9 +72,10 @@ exports.doctorConfirmation = async (req, res, next) => {
   }
 };
 
+// I am trying to fetch all with patient name
 exports.fetchAppointment = async (req, res, next) => {
   const { email } = req.body;
   console.log(email);
-  const fetchAppointment = await Appointment.find({ doctorEmail: email });
+  const fetchAppointment = await Appointment.find();
   res.status(200).send({ status: 200, message: fetchAppointment });
 };
