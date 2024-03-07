@@ -2,13 +2,45 @@ import axios from "axios";
 import React, { useEffect, useState } from "react";
 import { useSelector } from "react-redux";
 
+// Function to speak the given text
+const speak = (text) => {
+  const utterance = new SpeechSynthesisUtterance(text);
+  speechSynthesis.speak(utterance);
+};
+
 export const TodayMedicine = ({ option = 1, deleteItem = "" }) => {
   const [medicineData, setMedicineData] = useState([]);
   const {
     userData: { id },
   } = useSelector((state) => state?.users);
 
+  // Function to check medicine time and trigger speech notification
+  // Function to check medicine time and trigger speech notification
+// Function to check medicine time and trigger speech notification
+const checkMedicineTimes = () => {
+  // Get current time in the same format as medicine time
+  const currentDate = new Date();
+  const currentYear = currentDate.getFullYear();
+  const currentMonth = String(currentDate.getMonth() + 1).padStart(2, '0');
+  const currentDay = String(currentDate.getDate()).padStart(2, '0');
+  const currentHours = String(currentDate.getHours()).padStart(2, '0');
+  const currentMinutes = String(currentDate.getMinutes()).padStart(2, '0');
+  const currentTime = `${currentYear}-${currentMonth}-${currentDay}T${currentHours}:${currentMinutes}`;
+  console.log(currentTime);
+  // Loop through medicines and check if any match the current time
+  medicineData.forEach((medicine) => {
+    console.log(medicine);
+    if (medicine.medicine_time === currentTime) {
+      console.log("speak");
+      speak(`Time to take ${medicine.medicine_name}`);
+    }
+  });
+};
+
+
+
   useEffect(() => {
+    // Fetch medicine data only when the component mounts or when `id` changes
     const getData = async () => {
       const res = await axios.post(
         process.env.REACT_APP_BASE_URL + "/medicine/get-medicine",
@@ -21,9 +53,11 @@ export const TodayMedicine = ({ option = 1, deleteItem = "" }) => {
     };
 
     getData();
-  }, [id]);
 
-  console.log(medicineData.length);
+    // Check medicine times every minute
+    const interval = setInterval(checkMedicineTimes, 600);
+    return () => clearInterval(interval);
+  }, [id]); // Fetch data when `id` changes
 
   return (
     <>
