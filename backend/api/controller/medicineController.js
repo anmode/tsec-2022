@@ -26,6 +26,25 @@ exports.addMedicine = async (req, res, next) => {
   res.status(200).send("Medicine added successfully");
 };
 
+exports.decreaseMedicineTime = async (req, res, next) => {
+  const { medicineID, decreaseByMinutes } = req.body;
+
+  try {
+    const medicine = await Medicine.findById(medicineID);
+    if (!medicine) {
+      return res.status(404).send({ message: "Medicine not found" });
+    }
+
+    // Assuming medicine_time is stored as a Date object
+    medicine.medicine_time = new Date(medicine.medicine_time.getTime() - decreaseByMinutes * 60000);
+    
+    const updatedMedicine = await medicine.save();
+    res.status(200).send({ message: "Medicine time decreased successfully", updatedMedicine });
+  } catch (error) {
+    res.status(500).send({ message: "Error updating medicine time", error });
+  }
+};
+
 exports.deleteMedicine = (req, res, next) => {
   var { medicineID } = req.body;
   var findingAndDeletingMadicine = Medicine.findOneAndDelete({

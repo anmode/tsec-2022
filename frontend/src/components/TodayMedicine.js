@@ -1,20 +1,49 @@
 import axios from "axios";
 import React, { useEffect, useState } from "react";
 import { useSelector } from "react-redux";
-
-// Function to speak the given text
-const speak = (text) => {
-  const utterance = new SpeechSynthesisUtterance(text);
-  speechSynthesis.speak(utterance);
-};
+import "./anmol.css";
 
 export const TodayMedicine = ({ option = 1, deleteItem = "" }) => {
   const [medicineData, setMedicineData] = useState([]);
+  const [isVoiceEnabled, setIsVoiceEnabled] = useState(false);
   const {
     userData: { id },
   } = useSelector((state) => state?.users);
 
-  // Function to fetch medicine data and set up interval for checking medicine times
+  // Function to speak the given text
+  const speak = (text) => {
+    console.log("Speaking:", text);
+    const utterance = new SpeechSynthesisUtterance(text);
+
+    // Select the first English voice
+    const voices = speechSynthesis.getVoices();
+    const englishVoice = voices.find((voice) => voice.lang.startsWith("en"));
+
+    if (!englishVoice) {
+      console.error("No English voice found.");
+      return;
+    }
+
+    utterance.voice = englishVoice;
+    utterance.volume = 1; // Full volume
+    utterance.rate = 1; // Normal speed
+    utterance.pitch = 1; // Normal pitch
+
+    speechSynthesis.speak(utterance);
+  };
+
+  // Ensure voices are loaded before using them
+  if (speechSynthesis.onvoiceschanged !== undefined) {
+    speechSynthesis.onvoiceschanged = () => {
+      // Example to test the setup
+      speak("Testing voice setup");
+    };
+  } else {
+    // Directly speak if the voices are already loaded (e.g., revisiting the component)
+    speak("Testing voice setup");
+  }
+
+  // Function to fetch medicine data
   const getData = async () => {
     try {
       const res = await axios.post(
@@ -22,48 +51,65 @@ export const TodayMedicine = ({ option = 1, deleteItem = "" }) => {
         { carTakerId: id }
       );
 
-      console.log(res.data.message);
-      if (res.data.data === []) {
+      console.log("Medicine Data:", res.data.message);
+      if (res.data.message.length === 0) {
         setMedicineData([]);
       } else {
         setMedicineData(res.data.message);
-
-        // Check medicine times every minute
-        const interval = setInterval(checkMedicineTimes, 600);
-        return () => clearInterval(interval);
       }
     } catch (error) {
       console.error("Error fetching medicine data:", error);
     }
   };
 
-  useEffect(() => {
-    getData();
-  });
-
   // Function to check medicine time and trigger speech notification
   const checkMedicineTimes = () => {
-    // Get current time in the same format as medicine time
-    const currentDate = new Date();
-    const currentYear = currentDate.getFullYear();
-    const currentMonth = String(currentDate.getMonth() + 1).padStart(2, '0');
-    const currentDay = String(currentDate.getDate()).padStart(2, '0');
-    const currentHours = String(currentDate.getHours()).padStart(2, '0');
-    const currentMinutes = String(currentDate.getMinutes()).padStart(2, '0');
-    const currentTime = `${currentYear}-${currentMonth}-${currentDay}T${currentHours}:${currentMinutes}`;
- console.log(currentTime, medicineData);
-    // Loop through medicines and check if any match the current time
+    const currentTime = new Date();
+    const istOffset = 330;
+    const istTime = new Date(currentTime.getTime() + istOffset * 60000)
+      .toISOString()
+      .slice(0, 16);
+    // console.log("Current Time:", currentTime, "Medicine Data:", medicineData, );
     medicineData.forEach((medicine) => {
-      if (medicine.medicine_time === currentTime) {
+      console.log(
+        "Medicine Time:",
+        medicine.medicine_time,
+        "Current Time:",
+        istTime
+      );
+      if (medicine.medicine_time === istTime) {
+        console.log(`Time to take ${medicine.medicine_name}`);
         speak(`Time to take ${medicine.medicine_name}`);
+      } else {
+        console.log("No medicine to take");
       }
     });
   };
 
  
+  useEffect(() => {
+    let interval = null;
+    if (isVoiceEnabled) {
+      interval = setInterval(checkMedicineTimes, 2000);
+    } else {
+      clearInterval(interval);
+    }
+    return () => clearInterval(interval);
+  }, [medicineData, isVoiceEnabled]);
+
+
+  useEffect(() => {
+    getData();
+  }, []);
 
   return (
     <>
+       <button
+        onClick={() => setIsVoiceEnabled(!isVoiceEnabled)}
+        className="bg-blue-500 hover:bg-blue-700 text-white font-bold py-2 px-4 rounded"
+      >
+        {isVoiceEnabled ? "Disable Voice" : "Enable Voice"}
+      </button>
       {medicineData.length === 0 && (
         <h4 className="text-xl font-semibold text-gray-700 mb-3">
           Patient's Medicine Plan Not Added
@@ -78,16 +124,22 @@ export const TodayMedicine = ({ option = 1, deleteItem = "" }) => {
             {medicineData.map((item) => (
               <li className="mb-6 ml-4">
                 <div className="absolute w-3 h-3 bg-gray-700 rounded-full -left-1.5 border border-gray-800"></div>
-                <time className="flex justify-between mb-1 text-base font-normal leading-none text-gray-700">
-                  {item.medicine_time}
+                <div className="absolute z-20 right-0 flex items-center">
+                  <label className="switch mr-2">
+                    <input
+                      type="checkbox"
+                      onChange={() => setIsVoiceEnabled(!isVoiceEnabled)}
+                    />
+                    <span className="slider round"></span>
+                  </label>
                   <button
                     type="button"
-                    className="absolute z-20 right-0"
-                    onClick={() => deleteItem(item._id)}
+                    onClick={() => delete item._id}
+                    className="text-red-500 hover:text-red-700"
                   >
                     <svg
                       xmlns="http://www.w3.org/2000/svg"
-                      className="h-6 w-6 hover:text-red-800"
+                      className="h-6 w-6"
                       fill="none"
                       viewBox="0 0 24 24"
                       stroke="currentColor"
@@ -100,7 +152,7 @@ export const TodayMedicine = ({ option = 1, deleteItem = "" }) => {
                       />
                     </svg>
                   </button>
-                </time>
+                </div>
                 <h3 className="text-lg font-semibold text-gray-900">
                   {item.medicine_name}
                 </h3>
@@ -109,6 +161,9 @@ export const TodayMedicine = ({ option = 1, deleteItem = "" }) => {
                 </p>
                 <p className="my-1 text-base font-normal leading-none text-gray-700">
                   {item.description}
+                </p>
+                <p className="my-1 text-base font-normal leading-none text-gray-700">
+                  Time: {item.medicine_time}
                 </p>
               </li>
             ))}
