@@ -40,10 +40,10 @@ const {
 // }).single("medicineImg");
 
 router.post("/add-medicine", addMedicine);
-router.get("/delete-medicine", deleteMedicine);
+router.post("/delete-medicine", deleteMedicine);
 router.post("/get-medicine", fetchMedicine);
 
 router.post("/", addMedicine);
-router.get("/", deleteMedicine);
+// router.get("/", deleteMedicine);
 
 module.exports = router;

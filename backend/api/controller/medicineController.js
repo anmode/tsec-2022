@@ -36,10 +36,17 @@ exports.decreaseMedicineTime = async (req, res, next) => {
     }
 
     // Assuming medicine_time is stored as a Date object
-    medicine.medicine_time = new Date(medicine.medicine_time.getTime() - decreaseByMinutes * 60000);
-    
+    medicine.medicine_time = new Date(
+      medicine.medicine_time.getTime() - decreaseByMinutes * 60000
+    );
+
     const updatedMedicine = await medicine.save();
-    res.status(200).send({ message: "Medicine time decreased successfully", updatedMedicine });
+    res
+      .status(200)
+      .send({
+        message: "Medicine time decreased successfully",
+        updatedMedicine,
+      });
   } catch (error) {
     res.status(500).send({ message: "Error updating medicine time", error });
   }
@@ -47,19 +54,28 @@ exports.decreaseMedicineTime = async (req, res, next) => {
 
 exports.deleteMedicine = (req, res, next) => {
   var { medicineID } = req.body;
-  var findingAndDeletingMadicine = Medicine.findOneAndDelete({
-    _id: medicineID,
+  console.log(`Deleting medicine with ID: ${medicineID}`);
+  Medicine.findOneAndDelete({ _id: medicineID }, (err, deletedMedicine) => {
+    if (err) {
+      return res
+        .status(500)
+        .send({ message: "Error deleting medicine", error: err });
+    }
+    if (!deletedMedicine) {
+      return res.status(404).send({ message: "Medicine not found" });
+    }
+    // Assuming 'category_img' is a field in the Medicine model that stores the path to an image file
+    if (deletedMedicine.category_img) {
+      fs.unlink(deletedMedicine.category_img, (err) => {
+        if (err) {
+          console.log("Error deleting file:", err);
+        } else {
+          console.log("File deleted successfully");
+        }
+      });
+    }
+    res.status(200).send({ message: "Medicine deleted successfully" });
   });
-  findingAndDeletingMadicine.exec((err, singleData) => {
-    // try {
-    //   fs.unlinkSync(singleData["category_img"], function (err) {
-    //     console.log("file deleted successfully");
-    //   });
-    // } catch {
-    //   console.log("This error raised from file uploader");
-    // }
-  });
-  res.status(200).send({ catMsg: "Madicine deleted Successfully!!!" });
 };
 
 exports.fetchMedicine = async (req, res, next) => {

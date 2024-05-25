@@ -62,6 +62,26 @@ export const TodayMedicine = ({ option = 1, deleteItem = "" }) => {
     }
   };
 
+  const sendEmail = async () => {
+    try {
+      await axios.post(process.env.REACT_APP_BASE_URL + "/user/notify", {
+        userId: id,
+        message: "Voice notifications have been disabled.",
+      });
+      console.log("Email sent");
+    } catch (error) {
+      console.error("Error sending email:", error);
+    }
+  };
+
+  const toggleVoice = () => {
+    setIsVoiceEnabled(!isVoiceEnabled);
+    console.log("Voice Enabled:", isVoiceEnabled);
+    if (isVoiceEnabled) {
+      sendEmail();
+    }
+  };
+
   // Function to check medicine time and trigger speech notification
   const checkMedicineTimes = () => {
     const currentTime = new Date();
@@ -86,7 +106,6 @@ export const TodayMedicine = ({ option = 1, deleteItem = "" }) => {
     });
   };
 
- 
   useEffect(() => {
     let interval = null;
     if (isVoiceEnabled) {
@@ -97,6 +116,21 @@ export const TodayMedicine = ({ option = 1, deleteItem = "" }) => {
     return () => clearInterval(interval);
   }, [medicineData, isVoiceEnabled]);
 
+  // Function to delete medicine
+  const handleDelete = async (medicineId) => {
+    console.log("Deleting medicine with ID:", medicineId);
+    try {
+      const res = await axios.post(
+        `${process.env.REACT_APP_BASE_URL}/medicine/delete-medicine`,
+        { medicineID: medicineId }
+      );
+      if (res.status === 200) {
+        getData();
+      }
+    } catch (error) {
+      console.error("Failed to delete medicine:", error);
+    }
+  };
 
   useEffect(() => {
     getData();
@@ -104,7 +138,7 @@ export const TodayMedicine = ({ option = 1, deleteItem = "" }) => {
 
   return (
     <>
-       <button
+      <button
         onClick={() => setIsVoiceEnabled(!isVoiceEnabled)}
         className="bg-blue-500 hover:bg-blue-700 text-white font-bold py-2 px-4 rounded"
       >
@@ -126,15 +160,12 @@ export const TodayMedicine = ({ option = 1, deleteItem = "" }) => {
                 <div className="absolute w-3 h-3 bg-gray-700 rounded-full -left-1.5 border border-gray-800"></div>
                 <div className="absolute z-20 right-0 flex items-center">
                   <label className="switch mr-2">
-                    <input
-                      type="checkbox"
-                      onChange={() => setIsVoiceEnabled(!isVoiceEnabled)}
-                    />
+                    <input type="checkbox" onChange={toggleVoice} />
                     <span className="slider round"></span>
                   </label>
                   <button
                     type="button"
-                    onClick={() => delete item._id}
+                    onClick={() => handleDelete(item._id)}
                     className="text-red-500 hover:text-red-700"
                   >
                     <svg
